@@ -4,14 +4,9 @@
  */
 body {
   position: relative;
-  color: white;
+  color: #333;
   height: 100vh;
-  background: linear-gradient(
-    200.96deg,
-    #fedc2a -29.09%,
-    #dd5789 51.77%,
-    #7a2c9e 129.35%
-  );
+  background: whitesmoke;
   font-family: sans-serif;
   overflow-y: hidden;
   display: flex;
@@ -54,9 +49,15 @@ a:hover {
   text-decoration: none;
 }
 
-.Hello {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 20px 0;
+.dropzone {
+  border: 2px dashed #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  text-align: center;
+  font-size: 16px;
+  color: #888;
+  background-color: #f8f8f8;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
 }

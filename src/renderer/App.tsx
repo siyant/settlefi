@@ -1,40 +1,48 @@
-import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
-import icon from '../../assets/icon.svg';
+import { useCallback, useState } from 'react';
+import { useDropzone } from 'react-dropzone';
+import { Route, MemoryRouter as Router, Routes } from 'react-router-dom';
 import './App.css';
+import { parseTransactions } from './llm';
 
-function Hello() {
+function ImageUpload() {
+  const [files, setFiles] = useState<File[]>([]);
+  const [parsedResult, setParsedResult] = useState<string>();
+
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    setFiles((prevFiles) => [...prevFiles, ...acceptedFiles]);
+  }, []);
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+
+  const handleSubmit = async () => {
+    const result = await parseTransactions(files);
+    console.log('result :>> ', result);
+    setParsedResult(result);
+  };
+
   return (
     <div>
-      <div className="Hello">
-        <img width="200" alt="icon" src={icon} />
+      <div className="dropzone" {...getRootProps()}>
+        <input {...getInputProps()} />
+        {isDragActive ? (
+          <p>Drop the files here ...</p>
+        ) : (
+          <p>Drag 'n' drop some files here, or click to select files</p>
+        )}
       </div>
-      <h1>electron-react-boilerplate</h1>
-      <div className="Hello">
-        <a
-          href="https://electron-react-boilerplate.js.org/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <button type="button">
-            <span role="img" aria-label="books">
-              📚
-            </span>
-            Read our docs
-          </button>
-        </a>
-        <a
-          href="https://github.com/sponsors/electron-react-boilerplate"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <button type="button">
-            <span role="img" aria-label="folded hands">
-              🙏
-            </span>
-            Donate
-          </button>
-        </a>
-      </div>
+
+      {files.length > 0 && (
+        <div>
+          <h4>Files:</h4>
+          <ul>
+            {files.map((file, index) => (
+              <li key={index}>{file.name}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+      <button onClick={handleSubmit}>Import</button>
+      {parsedResult}
     </div>
   );
 }
@@ -43,7 +51,7 @@ export default function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Hello />} />
+        <Route path="/" element={<ImageUpload />} />
       </Routes>
     </Router>
   );
