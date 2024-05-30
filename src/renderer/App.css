@@ -2,6 +2,10 @@
  * @NOTE: Prepend a `~` to css file paths that are in your node_modules
  *        See https://github.com/webpack-contrib/sass-loader#imports
  */
+ *, *::before, *::after {
+  box-sizing: border-box;
+}
+
 body {
   position: relative;
   color: #333;
@@ -9,9 +13,9 @@ body {
   background: whitesmoke;
   font-family: sans-serif;
   overflow-y: hidden;
-  display: flex;
+  /* display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
 }
 
 button {
@@ -59,5 +63,5 @@ a:hover {
   background-color: #f8f8f8;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  width: 100%;
+  width: 500px;
 }
