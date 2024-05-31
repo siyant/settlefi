@@ -12,7 +12,8 @@ body {
   height: 100vh;
   background: whitesmoke;
   font-family: sans-serif;
-  overflow-y: hidden;
+  overflow-y: auto;
+  padding: 20px;
   /* display: flex;
   justify-content: center;
   align-items: center; */

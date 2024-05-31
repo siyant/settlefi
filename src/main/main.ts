@@ -15,6 +15,7 @@ import log from 'electron-log';
 import fs from 'fs';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+import { parse } from 'csv-parse/sync';
 
 class AppUpdater {
   constructor() {
@@ -37,10 +38,22 @@ const dataFile = '/Users/siyan/workspace/settlefi-transactions.csv';
 ipcMain.on('save-transactions', async (event, args) => {
   console.log('saving transactions,', args);
 
-  fs.appendFileSync(dataFile, args);
+  const split = args.split('\n');
+  split.shift();
+  console.log('split :>> ', split);
+  const transactions = split.join('\n');
+  console.log('transactions :>> ', transactions);
+  fs.appendFileSync(dataFile, transactions);
   fs.appendFileSync(dataFile, '\n');
   event.reply('save-transactions', true);
 });
+
+async function handleGetTransactions() {
+  const fileContents = fs.readFileSync(dataFile);
+  const records = parse(fileContents, { columns: true });
+  console.log('records :>> ', records);
+  return records;
+}
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -138,6 +151,7 @@ app.on('window-all-closed', () => {
 app
   .whenReady()
   .then(() => {
+    ipcMain.handle('get-transactions', handleGetTransactions);
     createWindow();
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the

@@ -3,7 +3,7 @@ import { useDropzone } from 'react-dropzone';
 import { Route, MemoryRouter as Router, Routes } from 'react-router-dom';
 import { parseTransactions } from './llm';
 import './App.css';
-import electron, { ipcRenderer } from 'electron';
+import Transactions from './Transactions';
 
 function ImageUpload() {
   const [state, setState] = useState<'selectFile' | 'editTransactions'>(
@@ -75,7 +75,7 @@ export default function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<ImageUpload />} />
+        <Route path="/" element={<Transactions />} />
       </Routes>
     </Router>
   );
