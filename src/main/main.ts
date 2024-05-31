@@ -16,6 +16,7 @@ import fs from 'fs';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import { parse } from 'csv-parse/sync';
+import { callAnthropicApi } from './llm';
 
 class AppUpdater {
   constructor() {
@@ -51,7 +52,6 @@ ipcMain.on('save-transactions', async (event, args) => {
 async function handleGetTransactions() {
   const fileContents = fs.readFileSync(dataFile);
   const records = parse(fileContents, { columns: true });
-  console.log('records :>> ', records);
   return records;
 }
 
@@ -152,6 +152,8 @@ app
   .whenReady()
   .then(() => {
     ipcMain.handle('get-transactions', handleGetTransactions);
+    ipcMain.handle('call-llm', async (event, arg) => callAnthropicApi(arg));
+
     createWindow();
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the

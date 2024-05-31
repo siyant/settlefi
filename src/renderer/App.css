@@ -18,7 +18,7 @@ body {
   justify-content: center;
   align-items: center; */
 }
-
+/* 
 button {
   background-color: white;
   padding: 10px 20px;
@@ -36,7 +36,7 @@ button {
 button:hover {
   transform: scale(1.05);
   opacity: 1;
-}
+} */
 
 li {
   list-style: none;
@@ -57,7 +57,7 @@ a:hover {
 .dropzone {
   border: 2px dashed #ccc;
   border-radius: 5px;
-  padding: 20px;
+  padding: 40px 20px;
   text-align: center;
   font-size: 16px;
   color: #888;
@@ -65,4 +65,5 @@ a:hover {
   cursor: pointer;
   transition: background-color 0.3s ease;
   width: 500px;
+  
 }
