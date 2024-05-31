@@ -11,7 +11,7 @@ interface Transaction {
   to: string;
 }
 
-function Transactions() {
+export default function Transactions() {
   const [transactionsList, setTransactionsList] = useState<Transaction[]>([]);
   useEffect(() => {
     async function getData() {
@@ -35,5 +35,3 @@ function Transactions() {
     </div>
   );
 }
-
-export default Transactions;
